@@ -62,10 +62,10 @@ public class LoanController {
         ModelAndView model = new ModelAndView("loanInformation");
       //Creating dummy data
         mBO = new MortgageBO();
-        mBO.setMonthlyInsurance(1000);
-        mBO.setMonthlyPrincipalAndInterest(10);
-        mBO.setMonthlyTax(30);
-        mBO.setTotalPayment(40);
+        mBO.setMonthlyInsurance(0.82);
+        mBO.setMonthlyPrincipalAndInterest(4298.78);
+        mBO.setMonthlyTax(0.84);
+        mBO.setTotalPayment(4300.44);
         
         model.addObject("mortgage", mBO);
                 model.addObject("loan", loan);

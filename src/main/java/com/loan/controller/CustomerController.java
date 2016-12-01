@@ -51,6 +51,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 8.Successfully created customer identification number and pinNumber. 
  * 9. Unit Test cases under construction
  * 10. Memcache implemented. need to test thoroughly
+ * 
  *           
  */
 
@@ -121,7 +122,8 @@ public class CustomerController {
 	 * The data we get from the webservice is not in valid format. Created
 	 * temporary json file.
 	 */
-	
+
+	//@Cacheable(value = "defaultCache", key = "map")
 	private Map<String, String> getStates() {
 
 		List<StaticStates> list = null;

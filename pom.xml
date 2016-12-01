@@ -14,6 +14,7 @@
 		<springsecurity.version>4.1.1.RELEASE</springsecurity.version>
 		<jackson.library>2.7.5</jackson.library>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -25,7 +26,17 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.1.0.Final</version>
 		</dependency>
-
+<!--	<dependency>
+	     <groupId>com.google.code.simple-spring-memcached</groupId>
+	     <artifactId>spring-cache</artifactId>
+	     <version>3.1.0</version>
+	</dependency>
+	<dependency>
+	     <groupId>com.google.code.simple-spring-memcached</groupId>
+	     <artifactId>xmemcached-provider</artifactId>
+	     <version>3.1.0</version>
+	</dependency>
+-->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
