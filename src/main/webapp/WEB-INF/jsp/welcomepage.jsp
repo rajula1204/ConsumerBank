@@ -32,7 +32,7 @@ h1 {
 
 body {
 	margin-top: 10px;
-	margin-right: 120px;
+	margin-right: 220px;
 	margin-bottom: 20px;
 	margin-left: 8px;
 }
@@ -55,7 +55,7 @@ border-bottom-left-radius: 25px;
 <body>
 	<div id= "box1" align="center" class="class2">
 		<h1>Please Enter the Customer details</h1>
-		<table border="0" width="40%" cellpadding="0">
+		<table border="0" width="60%" cellpadding="0">
 			<form:form method="POST" action="save" >
 				<tr>
 					<td align="left">First Name :</td>
