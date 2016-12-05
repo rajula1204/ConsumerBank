@@ -71,13 +71,12 @@ public class CustomerController implements CustomerControllerInterface {
 	 * @see com.bank.controller.CustomerControllerInterface#visitHome()
 	 */
 	@Override
-	@RequestMapping(value = Constants.ROOT, method = RequestMethod.GET)
+	@RequestMapping(value = Constants.HOME_REQUEST, method = RequestMethod.GET)
 	public ModelAndView visitHome() {
 		logger.info(" visitHome method");
 		
 		return methodForHomePage();
 	}
-
 
 	/* (non-Javadoc)
 	 * @see com.bank.controller.CustomerControllerInterface#customerWelcomePage()

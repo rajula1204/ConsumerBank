@@ -26,6 +26,7 @@ public class LoanController {
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(LoanController.class);
 	
+	
 	/** The customer manager. */
 	//@AutoWired has some issue, need to work on it later 
 	public CustomerService customerManager = new CustomerManager();
