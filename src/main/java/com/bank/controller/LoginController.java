@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,5 +90,13 @@ public class LoginController {
 		model.addAttribute("loginAttribute", loginForm);
 		return "login";
 	}
+	
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+			
+	    return "redirect:/"; 
+	}
+	
 	
 }

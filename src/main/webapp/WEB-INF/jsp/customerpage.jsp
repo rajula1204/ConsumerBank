@@ -53,6 +53,7 @@ border-bottom-left-radius: 25px;
 </head>
 
 <body>
+<div align="right"><table><tr><td><a href="logout">Logout</a></td></tr></table></div>
 	<div id= "box1" align="center" class="class2">
 		<h1>Please Enter the Customer details</h1>
 		<table border="0" width="60%" cellpadding="0">

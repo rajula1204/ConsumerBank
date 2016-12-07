@@ -45,6 +45,7 @@ border-bottom-left-radius: 25px;
 
 </head>
 <body>
+<div align="right"><table><tr><td><a href="logout">Logout</a></td></tr></table></div>
 <div id= "box1" align="center" class="class2"> 
 	<h1 align="center">Enter Customer Loan Details</h1>
 	  <form:form method="POST" action="loandetail">

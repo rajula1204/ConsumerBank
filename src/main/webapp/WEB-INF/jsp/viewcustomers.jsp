@@ -49,6 +49,7 @@ border-bottom-left-radius: 25px;
 </style>
 </head>
 <body>
+<div align="right"><table><tr><td><a href="logout">Logout</a></td></tr></table></div>
 	<div id= "box1" align="center" >
 		<h1>Customer details</h1>
 		<form:form method="GET" action="validatecustomer">

@@ -43,6 +43,7 @@ body {
 </style>
 </head>
 <body>
+<div align="right"><table><tr><td><a href="logout">Logout</a></td></tr></table></div>
 	<div id="box1" align="center" class="class2">
 		<form action="hello" method="GET">
 			<table align="center" border="3" height="10%" width="40%"
@@ -66,4 +67,5 @@ body {
 		</form>
 	</div>
 </body>
+<div><a href="emp/${2}" }>Test Exception</a></div>
 </html>
