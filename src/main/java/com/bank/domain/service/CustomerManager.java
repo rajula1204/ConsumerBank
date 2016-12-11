@@ -16,11 +16,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import net.spy.memcached.MemcachedClient;
 import net.webservicex.Mortgage;
 import net.webservicex.MortgageHttpGet;
 import net.webservicex.MortgageResults;
@@ -34,6 +37,7 @@ import com.bank.domain.model.Loan;
 import com.bank.domain.model.MortgageBO;
 import com.bank.domain.model.Quote;
 import com.bank.domain.model.StaticStates;
+import com.bank.handler.ContextListener;
 import com.bank.util.Constants;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -42,10 +46,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * The Class CustomerManager.
  */
+@Named
 public class CustomerManager implements CustomerService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(Customer.class);
+	
+	List<StaticStates> list = null;
+	Map<String, String> map = null;
+	
+	// private MemcachedClient memcached;
+       
+		
+	 	@Inject
+	    public CustomerManager() {
+	      
+	    }
+
 	
 	/* Generating pin number for each new customer.
 	 * @see com.bank.domain.service.CustomerService#getPinNumber(com.bank.domain.model.Customer)
@@ -58,28 +75,39 @@ public class CustomerManager implements CustomerService {
 	}
 
 
-	/* Reading data from the local json file. it is temporary.
+	/* Reading data from the local json file. it is temporary. Used memcache.
 	 * @see com.bank.domain.service.CustomerService#getStates()
 	 */
 	//@Cacheable(value = "defaultCache", key = "map")
 	@Override
 	public Map<String, String> getStates()  throws Exception {
-
-		List<StaticStates> list = null;
-		Map<String, String> map = null;
+   
+		 
 		ObjectMapper objectMapper = new ObjectMapper();
 
+		if(ContextListener.getClient().get(Constants.MEMCACHED_STATES) != null){
+			logger.info("getting the value from memcache");
+			Object obj = ContextListener.getClient().get(Constants.MEMCACHED_STATES);
+			@SuppressWarnings("unchecked")
+			Map<String, String> map = (Map<String, String>) obj;          		
+			
+			return map;
+		}
+		
 		try {
+			
 			list = objectMapper.readValue(
 					new File(Constants.JSON_LOCAL_FILE),
 					objectMapper.getTypeFactory().constructCollectionType(
 							List.class, StaticStates.class));
+			
 			map = new HashMap<String, String>();
+		
 			for (StaticStates st : list) {
 				map.put(st.getAbbr(), st.getName());
-
+	
 			}
-
+			
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -87,21 +115,36 @@ public class CustomerManager implements CustomerService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		logger.info("Adding the states into Memcache");
+		ContextListener.getClient().add(Constants.MEMCACHED_STATES,2000,map);
 		return map;
 	}
         
 	/* For time being  filling dummey data. It will be deleted once the Web service (method callLoanWEbservice()) works fine
 	 * @see com.bank.domain.service.CustomerService#callTempMortgageServiceToFillData()
 	 */
-	public MortgageBO callTempMortgageServiceToFillData() {
-		MortgageBO mBO;
-		mBO = new MortgageBO();
+	@Override
+	public MortgageBO callTempMortgageServiceToFillData() throws IOException {
+		MortgageBO mBO = new MortgageBO();
+		
+		if(ContextListener.getClient().get(Constants.MEMCACHED_MORTGAGE) != null){
+			logger.info("getting the mortgage value from memcache");
+			Object obj = ContextListener.getClient().get(Constants.MEMCACHED_MORTGAGE);
+			
+			mBO = (MortgageBO) obj;          		
+			
+			return mBO;
+		}
+				
         mBO.setMonthlyInsurance(0.82);
         mBO.setMonthlyPrincipalAndInterest(4298.78);
         mBO.setMonthlyTax(0.84);
         mBO.setTotalPayment(4300.44);
-		return mBO;
+		
+        logger.info("Adding the mortgage into Memcache");
+		ContextListener.getClient().add(Constants.MEMCACHED_MORTGAGE,2000,mBO);
+        
+        return mBO;
 	}
 	
 	/* Calling Restful WEbservice
@@ -190,7 +233,8 @@ public class CustomerManager implements CustomerService {
 	/* (non-Javadoc)
 	 * @see com.bank.domain.service.CustomerService#callLoanWEbservice(com.bank.domain.model.Loan)
 	 */
-	public MortgageBO callLoanWEbservice(Loan loan) throws Exception {
+	@Override
+	public MortgageBO callLoanWebService(Loan loan) throws Exception {
 		Mortgage mortService = null;
 		MortgageBO m=null;
 		MortgageResults mortResult = null;
@@ -201,9 +245,10 @@ public class CustomerManager implements CustomerService {
 			mortService = new Mortgage(url,SERVICE_NAME);
 		} catch (MalformedURLException e) {
 				e.printStackTrace();
-		}catch(NullPointerException e )
-		{
+		} catch (NullPointerException e) {
+
 			e.printStackTrace();
+
 		}
 		try{
 		MortgageHttpGet  mortGet = mortService.getMortgageHttpGet();

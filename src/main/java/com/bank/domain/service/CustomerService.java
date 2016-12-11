@@ -1,5 +1,6 @@
 package com.bank.domain.service;
 
+import java.io.IOException;
 import java.util.Map;
 
 import com.bank.domain.model.Customer;
@@ -17,7 +18,7 @@ public interface CustomerService {
 
 	public abstract Customer getcustomers(Customer cust);
 	
-	public abstract MortgageBO callLoanWEbservice(Loan loan) throws Exception;
-	public abstract MortgageBO callTempMortgageServiceToFillData();
+	public abstract MortgageBO callLoanWebService(Loan loan) throws Exception;
+	public abstract MortgageBO callTempMortgageServiceToFillData() throws IOException;
 
 }

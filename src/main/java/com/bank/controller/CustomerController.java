@@ -3,6 +3,7 @@ package com.bank.controller;
 
 import java.util.Map;
 
+import javax.inject.Named;
 import javax.validation.Valid;
 
 
@@ -12,6 +13,9 @@ import javax.validation.Valid;
 
 
 
+
+
+import net.spy.memcached.MemcachedClient;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +65,7 @@ public class CustomerController implements CustomerControllerInterface {
 	private void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
+	
 	
 	/** The customer manager. */
 	//@AutoWired has some issue, need to work on it later

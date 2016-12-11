@@ -45,4 +45,17 @@
 		</mvc:interceptor>
  	</mvc:interceptors> 
 	
+	<beans:bean id="memcached.client" class="net.spy.memcached.spring.MemcachedClientFactoryBean">
+        <beans:property name="servers" value="127.0.0.1:11211" />
+        <beans:property name="protocol" value="BINARY" />
+        <beans:property name="transcoder">
+            <beans:bean class="net.spy.memcached.transcoders.SerializingTranscoder" />
+        </beans:property>
+        <beans:property name="locatorType" value="ARRAY_MOD" />
+        <beans:property name="opTimeout" value="2000" />
+        <beans:property name="failureMode" value="Cancel" />
+        <beans:property name="useNagleAlgorithm" value="false" />
+        <beans:property name="timeoutExceptionThreshold" value="20" />
+    </beans:bean>
+	
 	</beans:beans>

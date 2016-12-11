@@ -11,6 +11,10 @@
     </init-param>
     <load-on-startup>1</load-on-startup>  
 </servlet>  
+<listener>
+    <description>Used with memcached to initialize connection</description>
+    <listener-class>com.bank.handler.ContextListener</listener-class>
+</listener>
 <servlet-mapping>  
     <servlet-name>spring</servlet-name>  
     <url-pattern>/</url-pattern>  

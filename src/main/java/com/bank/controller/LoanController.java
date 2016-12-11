@@ -26,6 +26,7 @@ import com.bank.util.Constants;
 
 
 
+
 /**
  * The Class LoanController.
  */
@@ -58,9 +59,10 @@ public class LoanController {
 	 *
 	 * @param loan the loan
 	 * @return the model and view
+	 * @throws IOException 
 	 */
 	@RequestMapping(value=Constants.LOAN_DETAILS, method = RequestMethod.POST)  
-    public ModelAndView fetchLoanDetails(@ModelAttribute(Constants.COMMAND) Loan loan){
+    public ModelAndView fetchLoanDetails(@ModelAttribute(Constants.COMMAND) Loan loan) throws IOException{
 		MortgageBO mBO =null;
         logger.info("fetchLoanDetails start");
         ModelAndView model = new ModelAndView(Constants.LOAN_INFORMATION_PAGE);

@@ -1,6 +1,10 @@
 package com.bank.domain.model;
 
-public class MortgageBO {
+import java.io.Serializable;
+
+public class MortgageBO implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private double monthlyPrincipalAndInterest;
 	private double monthlyTax;
 	private double monthlyInsurance;

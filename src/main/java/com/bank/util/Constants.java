@@ -38,6 +38,9 @@ public interface Constants {
 
     // files
 	public static final String JSON_LOCAL_FILE = "C:\\rajula\\st.json"; //find the file in com/bank/controller folder
+	//MemCached fields
+	public static final String MEMCACHED_STATES = "memStates";
+	public static final String MEMCACHED_MORTGAGE = "memMortgage";
 	
 	
 
